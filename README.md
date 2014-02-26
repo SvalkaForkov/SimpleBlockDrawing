@@ -11,7 +11,7 @@ Import
     #import "UIView+DrawBlock.h" 
 ```
     
-Use it!
+Use it! Result block returns a UIView added to original view with  the drawing.
 ```objective-c
 
     [self.viewToDraw drawInside:^(CGContextRef context) {
