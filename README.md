@@ -14,7 +14,7 @@ Import
 Use it! Result block returns a UIView added to original view with  the drawing.
 ```objective-c
 
-    [self.viewToDraw drawInside:^(CGContextRef context) {
+    [viewToDraw drawInside:^(CGContextRef context) {
         
         // Draw
         CGContextSetStrokeColorWithColor(context, [UIColor redColor].CGColor);
