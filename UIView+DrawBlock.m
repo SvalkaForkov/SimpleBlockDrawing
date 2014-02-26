@@ -32,10 +32,6 @@
     }
 }
 
-- (void)dealloc {
-    _drawBlock = nil;
-}
-
 @end
 
 #pragma mark - Category
@@ -55,10 +51,6 @@
         [self addSubview:drawView];
         completion(drawView);
     }
-}
-
-- (void)dealloc {
-    self.drawBlock = nil;
 }
 
 #pragma mark - Others
