@@ -8,7 +8,7 @@ Category for drawing on UIView with a simplest way
 
 Import 
 ```objective-c
-    #import "#import "UIView+DrawBlock.h"" 
+    #import "UIView+DrawBlock.h" 
 ```
     
 Use it!
