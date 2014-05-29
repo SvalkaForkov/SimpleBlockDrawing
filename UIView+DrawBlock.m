@@ -48,7 +48,9 @@
         drawView.backgroundColor = [UIColor clearColor];
         [drawView setDrawRectBlock:self.drawBlock];
         [self addSubview:drawView];
-        completion(drawView);
+        if (completion != NULL) {
+            completion(drawView);
+        }
     }
 }
 
