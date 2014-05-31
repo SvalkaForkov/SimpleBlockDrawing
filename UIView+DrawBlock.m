@@ -45,6 +45,7 @@
 - (void)drawInside:(DrawBlock)block withResult:(CompletionBlock)completion {
     if ((self.drawBlock = [block copy])) {
         DrawingView *drawView = [[DrawingView alloc] initWithFrame:self.bounds];
+        drawView.userInteractionEnabled = NO;
         drawView.backgroundColor = [UIColor clearColor];
         [drawView setDrawRectBlock:self.drawBlock];
         [self addSubview:drawView];
