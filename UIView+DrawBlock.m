@@ -27,7 +27,7 @@
 
 - (void)drawRect:(CGRect)rect {
     if(_drawBlock) {
-        _drawBlock(UIGraphicsGetCurrentContext(), rect.size);
+        _drawBlock(UIGraphicsGetCurrentContext(), rect);
     }
 }
 
