@@ -11,45 +11,49 @@
 
 #pragma mark - Auxiliar view
 @interface DrawingView : UIView
-
-@property (copy, nonatomic) DrawBlock drawBlock;
-
+@property (weak, nonatomic, setter = setDrawRectBlock:) DrawBlock drawBlock;
 - (void)setDrawRectBlock:(DrawBlock)block;
-
 @end
 
 @implementation DrawingView
 - (void)setDrawRectBlock:(DrawBlock)block {
-    if((_drawBlock = [block copy])) {
+    if (_drawBlock = [block copy]) {
         [self setNeedsDisplay];
     }
 }
-
 - (void)drawRect:(CGRect)rect {
-    if(_drawBlock) {
-        _drawBlock(UIGraphicsGetCurrentContext(), rect);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    if (_drawBlock != nil) {
+        _drawBlock(context, rect);
     }
+    _drawBlock = nil;
 }
-
 @end
 
 #pragma mark - Category
-@interface UIView ()
-
-@property DrawBlock drawBlock;
-
-@end
-
 @implementation UIView (DrawBlock)
-
 - (void)drawInside:(DrawBlock)block withResult:(CompletionBlock)completion {
-    if ((self.drawBlock = [block copy])) {
-        DrawingView *drawView = [[DrawingView alloc] initWithFrame:self.bounds];
+    if (block != nil) {
+        DrawingView *drawView = [[DrawingView alloc] init];
+        drawView.drawBlock = block;
+        drawView.translatesAutoresizingMaskIntoConstraints = NO;
         drawView.userInteractionEnabled = NO;
         drawView.backgroundColor = [UIColor clearColor];
-        [drawView setDrawRectBlock:self.drawBlock];
         [self addSubview:drawView];
-        if (completion != NULL) {
+        
+        NSDictionary *views = NSDictionaryOfVariableBindings(drawView);
+        NSArray *constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[drawView]|"
+                                                                       options:0
+                                                                       metrics:nil
+                                                                         views:views];
+        [self addConstraints:constraints];
+        constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[drawView]|"
+                                                              options:0
+                                                              metrics:nil
+                                                                views:views];
+        [self addConstraints:constraints];
+
+        if (completion != nil) {
             completion(drawView);
         }
     }
