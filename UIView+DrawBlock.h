@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 // Blocks
-typedef void(^DrawBlock)(CGContextRef context, CGRect rect);
+typedef void(^DrawBlock)(CGContextRef context, CGRect drawFrame);
 typedef void(^CompletionBlock)(UIView *view);
 
 @interface UIView (DrawBlock)
