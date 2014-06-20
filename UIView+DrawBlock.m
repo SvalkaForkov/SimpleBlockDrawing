@@ -17,7 +17,8 @@
 
 @implementation DrawingView
 - (void)setDrawRectBlock:(DrawBlock)block {
-    if (_drawBlock = [block copy]) {
+    _drawBlock = [block copy];
+    if (_drawBlock) {
         [self setNeedsDisplay];
     }
 }
