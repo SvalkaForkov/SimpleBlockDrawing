@@ -2,7 +2,7 @@
 //  UIView+DrawRectBlock.h
 //  TestDrawRect
 //
-//  Created by mhergon on 25/02/14.
+//  Created by mhergon on 20/06/14.
 //  Copyright (c) 2014 mhergon. All rights reserved.
 //
 
