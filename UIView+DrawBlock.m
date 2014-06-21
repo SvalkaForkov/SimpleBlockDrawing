@@ -7,17 +7,16 @@
 //
 
 #import "UIView+DrawBlock.h"
-#import <objc/runtime.h>
 
 #pragma mark - Auxiliar view
 @interface DrawingView : UIView
-@property (strong, nonatomic, setter = setDrawRectBlock:) DrawBlock drawBlock;
+@property (strong, nonatomic) DrawBlock drawBlock;
 - (void)setDrawRectBlock:(DrawBlock)block;
 @end
 
 @implementation DrawingView
 - (void)setDrawRectBlock:(DrawBlock)block {
-    _drawBlock = [block copy];
+    _drawBlock = block;
     if (_drawBlock) {
         [self setNeedsDisplay];
     }
@@ -28,20 +27,19 @@
         _drawBlock(context, rect);
         _drawBlock = nil;
     }
-    
+
 }
 @end
 
 #pragma mark - Category
 @implementation UIView (DrawBlock)
 - (void)drawInside:(DrawBlock)block withResult:(CompletionBlock)completion {
-    if (block != nil) {
+    if (block) {
         DrawingView *drawView = [[DrawingView alloc] init];
         drawView.translatesAutoresizingMaskIntoConstraints = NO;
         drawView.userInteractionEnabled = NO;
         drawView.backgroundColor = [UIColor clearColor];
         [self addSubview:drawView];
-        drawView.drawBlock = block;
         
         NSDictionary *views = NSDictionaryOfVariableBindings(drawView);
         NSArray *constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[drawView]|"
@@ -54,20 +52,12 @@
                                                               metrics:nil
                                                                 views:views];
         [self addConstraints:constraints];
-
+        [drawView setDrawRectBlock:block];
+        
         if (completion != nil) {
             completion(drawView);
         }
     }
-}
-
-#pragma mark - Others
-- (void)setDrawBlock:(DrawBlock)drawBlock {
-    objc_setAssociatedObject(self, @"block", drawBlock, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-- (DrawBlock)drawBlock {
-    return objc_getAssociatedObject(self, @"block");
 }
 
 @end
