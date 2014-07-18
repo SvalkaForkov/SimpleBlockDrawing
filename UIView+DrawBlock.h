@@ -13,7 +13,6 @@ typedef void(^DrawBlock)(CGContextRef context, CGRect drawFrame);
 typedef void(^CompletionBlock)(UIView *view);
 
 @interface UIView (DrawBlock)
-
 - (void)drawInside:(DrawBlock)block withResult:(CompletionBlock)completion;
 
 @end
